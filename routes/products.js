@@ -5,9 +5,6 @@ const router = express.Router()
 const { getAllProducts, getOneProduct, createProduct, updateProduct, deleteProduct } = require('../controllers/products')
 const auth = require('../middleware/auth')
 
-
-/* CRUD product */
-
 router.get('/', getAllProducts)
 router.get('/:id', getOneProduct)
 

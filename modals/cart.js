@@ -8,7 +8,6 @@ const CartSchema = new Schema({
 })
 
 CartSchema.methods.toJSON = function () {
-  /* spread operator */
   const { __v, ...cart } = this.toObject()
   return cart
 }

@@ -16,8 +16,6 @@ const getOneUser = async (req, res) => {
 }
 
 const createUser = async (req, res) => {
-  console.log(req.body)
-
   try {
 
     const errors = validationResult(req)
@@ -42,14 +40,14 @@ const createUser = async (req, res) => {
     cart.idUsuario = user._id
     user.idCart = cart._id
 
-/*     await sendMailerRegister(req.body.email) */
+    /* await sendMailerRegister(req.body.email) */
 
     await user.save()
     await cart.save()
 
-    res.status(201).json({ msg: 'Usuario Creado con exito', user, status: 201 })
+    res.status(201).json({ msg: 'Usuario Creado con exito', user })
   } catch (error) {
-    console.log(error)
+    res.status(500).json(error)
   }
 }
 
@@ -62,9 +60,9 @@ const updateUser = async (req, res) => {
     }
 
     const updateUser = await UserModel.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true })
-    res.status(200).json({ msg: 'Usuario Actualizado Correctamente', updateUser, status:200 })
+    res.status(200).json({ msg: 'Usuario Actualizado Correctamente', updateUser, status: 200 })
   } catch (error) {
-    console.log(error)
+    res.status(500).json(error)
   }
 }
 
@@ -72,8 +70,6 @@ const deleteUser = async (req, res) => {
   await UserModel.findByIdAndDelete({ _id: req.params.id })
   res.json({ msg: 'Se borro correctamente el usuario' })
 }
-
-/* Termina el CRUD o el ABM de USUARIO */
 
 const loginUser = async (req, res) => {
   try {
@@ -110,17 +106,15 @@ const loginUser = async (req, res) => {
     }
 
   } catch (error) {
-    console.log(error)
+    res.status(500).json(error)
   }
 }
 
 const logoutUser = async (req, res) => {
   const userId = await UserModel.findOne({ _id: req.userLoginId })
-  console.log(userId)
 
   userId.token = ''
-  const userLogout = await UserModel.findByIdAndUpdate({ _id: req.userLoginId }, userId, { new: true })
-  console.log(userLogout)
+  await UserModel.findByIdAndUpdate({ _id: req.userLoginId }, userId, { new: true })
   res.status(200).json({ msg: 'Usuario Desloguado' })
 }
 

@@ -6,7 +6,6 @@ const getAllProducts = async (req, res) => { /* req - request, res - resolve */
     const getAllProd = await ProductModel.find()
     res.status(200).json({ msg: 'Se envian productos', getAllProd })
   } catch (error) {
-    console.log(error)
     throw new Error('No se encontro el producto')
   }
 }
@@ -16,7 +15,7 @@ const getOneProduct = async (req, res) => { /* req - request, res - resolve */
     const getOneProd = await ProductModel.findOne({ _id: req.params.id })
     res.status(200).json({ msg: 'Producto encontrado', getOneProd })
   } catch (error) {
-    console.log(error)
+    res.status(500).json(error)
   }
 }
 
@@ -33,7 +32,7 @@ const createProduct = async (req, res) => { /* req - request, res - resolve */
     await newProd.save()
     res.status(201).json({ msg: 'Se creo el producto correctamente', newProd, status: 201  })
   } catch (error) {
-    console.log(error)
+    res.status(500).json(error)
   }
 }
 
@@ -49,7 +48,7 @@ const updateProduct = async (req, res) => { /* req - request, res - resolve */
     const updateProd = await ProductModel.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true })
     res.status(200).json({ msg: 'Producto actualizado correctamente', updateProd })
   } catch (error) {
-    console.log(error)
+    res.status(500).json(error)
   }
 }
 
@@ -58,7 +57,7 @@ const deleteProduct = async (req, res) => { /* req - request, res - resolve */
     await ProductModel.findByIdAndDelete({ _id: req.params.id })
     res.status(200).json({ msg: 'Producto eliminado correctamentes', status:200 })
   } catch (error) {
-    console.log(error)
+    res.status(500).json(error)
   }
 }
 

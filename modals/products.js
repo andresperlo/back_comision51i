@@ -20,7 +20,6 @@ const ProductSchema = new Schema({
 })
 
 ProductSchema.methods.toJSON = function () {
-  /* spread operator */
   const { __v, ...product } = this.toObject()
   return product
 }

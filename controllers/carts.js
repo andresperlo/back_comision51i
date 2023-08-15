@@ -6,7 +6,7 @@ const getOneCartAllProduct = async (req, res) => {
     const getCart = await CartModel.findOne({_id: req.params.id})
     res.status(200).json({msg: 'Carrito encontrado', getCart})
   } catch (error) {
-    console.log(error)
+    res.status(500).json(error)
   }
 }
 
@@ -27,7 +27,7 @@ const addProductCart = async (req, res) => {
 
       res.status(200).json({msg: 'Producto se cargo correctamente', getCart})
     } catch (error) {
-      console.log(error)
+      res.status(500).json(error)
     }
 }
 
@@ -37,7 +37,7 @@ const createCart = async (req, res) => {
     await newCart.save()
     res.status(201).json({msg:'Carrito Creado', newCart})
   } catch (error) {
-    console.log(error)
+    res.status(500).json(error)
   }
 }
 

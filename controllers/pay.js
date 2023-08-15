@@ -1,7 +1,6 @@
 const mercadopago = require('mercadopago')
 
 const createPay = async (req, res) => {
-  console.log(req.body)
   try {
     mercadopago.configure({
       access_token: process.env.TOKEN_MERCADOPAGO
@@ -22,25 +21,21 @@ const createPay = async (req, res) => {
         failure: 'http://localhost:8080/api/pay/failure'
       }
     })
-    console.log(preference.body)
     res.status(200).json({res: preference.body})
   } catch (error) {
-    console.log(error)
+    res.status(500).json(error)
   }
 }
 
 const responseSuccess = async (req, res) => {
-  console.log(req.query)
   res.send('success')
 }
 
 const responsePending = async (req, res) => {
-  console.log(req.query)
   res.send('pending')
 }
 
 const responseFailure = async (req, res) => {
-  console.log(req.query)
   res.send('failure')
 }
 
